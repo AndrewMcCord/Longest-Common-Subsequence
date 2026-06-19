@@ -1,0 +1,1 @@
+This is the GitHub repository for Andrew's and Emoni's code for the Longest Commest Subsequence research project that will be completed under the research of Dr. Rao Li at the University of South Carolina, Aiken.
