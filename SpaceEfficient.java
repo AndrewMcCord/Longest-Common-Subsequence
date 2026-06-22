@@ -14,7 +14,7 @@ public class SpaceEfficient{
         int result = 0;   // length of longest common substring
         int end = 0;      // ending index of the substring in X
 
-        // CORRECTED: array size is now [2][n+1] so that j can safely go from 0..n
+        // array size is [2][n+1] so that j can safely go from 0..n
         int[][] len = new int[2][n + 1];
         int currRow = 0;  // 0 or 1
 
