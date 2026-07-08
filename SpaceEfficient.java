@@ -1,58 +1,65 @@
-public class SpaceEfficient{
+public class SpaceEfficient {
 
     /**
-     * Finds the longest common substring between two strings.
-     * Uses dynamic programming with O(min(m,n)) space (two rows of size n+1).
-     * @param X First string
-     * @param Y Second string
-     * @return Longest common substring, or "-1" if none exists
+     * Finds the longest string that is a SUBSEQUENCE of X and a SUBSTRING of Y.
+     * Space complexity: O( min(m, n) ) – two rows of length n+1.
+     *
+     * @param X string treated as the "subsequence" source
+     * @param Y string treated as the "substring" source
+     * @return the longest common subsequence‑substring, or "-1" if none exists
      */
-    public static String lcSubstr(String X, String Y) {
+    public static String longestSubseqSubstr(String X, String Y) {
         int m = X.length();
         int n = Y.length();
 
-        int result = 0;   // length of longest common substring
-        int end = 0;      // ending index of the substring in X
+        int maxLen = 0;          // length of the optimal string
+        int endY = 0;            // ending index (inclusive) of the substring inside Y
 
-        // array size is [2][n+1] so that j can safely go from 0..n
+        // DP table with two rows: len[0][j] = previous row, len[1][j] = current row
         int[][] len = new int[2][n + 1];
-        int currRow = 0;  // 0 or 1
+        int currRow = 0;         // 0 or 1
 
         for (int i = 0; i <= m; i++) {
             for (int j = 0; j <= n; j++) {
                 if (i == 0 || j == 0) {
                     len[currRow][j] = 0;
                 } else if (X.charAt(i - 1) == Y.charAt(j - 1)) {
+                    // match: extend the diagonal
                     len[currRow][j] = len[1 - currRow][j - 1] + 1;
 
-                    if (len[currRow][j] > result) {
-                        result = len[currRow][j];
-                        end = i - 1;   // position in X
+                    if (len[currRow][j] > maxLen) {
+                        maxLen = len[currRow][j];
+                        endY = j - 1;        // j-1 because j is 1‑based in DP
                     }
                 } else {
-                    len[currRow][j] = 0;
+                    // mismatch: skip the character in X, keep Y's position
+                    len[currRow][j] = len[1 - currRow][j];
                 }
             }
-            // Swap rows for the next iteration
+            // swap rows for the next i
             currRow = 1 - currRow;
         }
 
-        if (result == 0) {
+        if (maxLen == 0) {
             return "-1";
         }
-        return X.substring(end - result + 1, end + 1);
+
+        // The optimal string is a substring of Y, ending at endY
+        return Y.substring(endY - maxLen + 1, endY + 1);
     }
 
+    // Quick demonstration
     public static void main(String[] args) {
         String X = "GeeksforGeeks";
         String Y = "GeeksQuiz";
 
-        System.out.println("Method 1 (Space-optimized): " + lcSubstr(X, Y));
+        System.out.println("Longest subsequence of X and substring of Y: " +
+                longestSubseqSubstr(X, Y));  // Expected: "Geeks"
 
-        System.out.println("\nAdditional Test Cases:");
-        System.out.println("Test 1: " + lcSubstr("ABCDGH", "ACDGHR")); // common part e.g. "CDGH"
-        System.out.println("Test 2: " + lcSubstr("abc", "xyz"));      // -1
-        System.out.println("Test 3: " + lcSubstr("HELLO", "ELLO"));   // ELLO
-        System.out.println("Test 4: " + lcSubstr("short", "longershortexample")); // short
+        // Additional tests
+        System.out.println(longestSubseqSubstr("ABCDGH", "ACDGHR"));  // "CDGH" or "ACDG"?
+        System.out.println(longestSubseqSubstr("abc", "xyz"));        // "-1"
+        System.out.println(longestSubseqSubstr("HELLO", "ELLO"));     // "ELLO"
+        System.out.println(longestSubseqSubstr("short", "longershortexample")); // "short"
     }
 }
