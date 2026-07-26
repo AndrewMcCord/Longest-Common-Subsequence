@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class SpaceEfficient {
 
     /**
@@ -61,5 +63,39 @@ public class SpaceEfficient {
         System.out.println(longestSubseqSubstr("abc", "xyz"));        // "-1"
         System.out.println(longestSubseqSubstr("HELLO", "ELLO"));     // "ELLO"
         System.out.println(longestSubseqSubstr("short", "longershortexample")); // "short"
+
+        // ---------- Interactive user input ----------
+        while (true) {
+            String xUser = JOptionPane.showInputDialog(
+                    null,
+                    "Enter string X (subsequence source),\nor Cancel / type 'quit' to exit:",
+                    "Input X",
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            // User closed the dialog or typed quit
+            if (xUser == null || xUser.trim().equalsIgnoreCase("quit")) {
+                break;
+            }
+
+            String yUser = JOptionPane.showInputDialog(
+                    null,
+                    "Enter string Y (substring source),\nor Cancel / type 'quit' to exit:",
+                    "Input Y",
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (yUser == null || yUser.trim().equalsIgnoreCase("quit")) {
+                break;
+            }
+
+            String result = longestSubseqSubstr(xUser, yUser);
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Longest subsequence of X and substring of Y:\n" + result,
+                    "Result",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }
 }
