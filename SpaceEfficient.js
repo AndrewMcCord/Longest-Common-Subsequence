@@ -1,5 +1,14 @@
 const readline = require("readline");
 
+/**
+     * Finds the longest string that is a SUBSEQUENCE of X and a SUBSTRING of Y.
+     * Space complexity: O( min(m, n) ) – two rows of length n+1.
+     *
+     * @param X string treated as the "subsequence" source
+     * @param Y string treated as the "substring" source
+     * @return the longest common subsequence‑substring, or "-1" if none exists
+     */
+
 function longestSubseqSubstr(X, Y) {
     const m = X.length;
     const n = Y.length;
