@@ -3,16 +3,17 @@ import javax.swing.JOptionPane;
 public class SpaceEfficient {
 
     /**
-     * Finds the longest string that is a SUBSEQUENCE of X and a SUBSTRING of Y.
+     * Finds the longest string that is a subsequence of X and a substring of Y.
      * Space complexity: O( min(m, n) ) – two rows of length n+1.
      *
      * @param X string treated as the "subsequence" source
      * @param Y string treated as the "substring" source
-     * @return the longest common subsequence‑substring, or "-1" if none exists
+     * @return the longest common subsequence‑substring, or "-1" if one doesn't exist
      */
     public static String longestSubseqSubstr(String X, String Y) {
-        int m = X.length();
-        int n = Y.length();
+    
+        int m = X.length(); // length of string x
+        int n = Y.length(); // length of string y
 
         int maxLen = 0;          // length of the optimal string
         int endY = 0;            // ending index (inclusive) of the substring inside Y
@@ -50,46 +51,52 @@ public class SpaceEfficient {
         return Y.substring(endY - maxLen + 1, endY + 1);
     }
 
-    // Quick demonstration
+    // Below is a test of the space-efficient algorithm
     public static void main(String[] args) {
         String X = "GeeksforGeeks";
         String Y = "GeeksQuiz";
 
         System.out.println("Longest subsequence of X and substring of Y: " +
-                longestSubseqSubstr(X, Y));  // Expected: "Geeks"
+                longestSubseqSubstr(X, Y));  // Result: "Geeks"
 
-        // Additional tests
-        System.out.println(longestSubseqSubstr("ABCDGH", "ACDGHR"));  // "CDGH" or "ACDG"?
-        System.out.println(longestSubseqSubstr("abc", "xyz"));        // "-1"
-        System.out.println(longestSubseqSubstr("HELLO", "ELLO"));     // "ELLO"
-        System.out.println(longestSubseqSubstr("short", "longershortexample")); // "short"
+        // Additional tests and outputs
+        System.out.println(longestSubseqSubstr("ABCDGH", "ACDGHR"));  // Result: "CDGH" or "ACDG"?
+        System.out.println(longestSubseqSubstr("abc", "xyz"));        // Result: "-1"
+        System.out.println(longestSubseqSubstr("HELLO", "ELLO"));     // Result: "ELLO"
+        System.out.println(longestSubseqSubstr("short", "longershortexample")); // Result: "short"
 
-        // ---------- Interactive user input ----------
+        // JOptionPane's interactive user input 
         while (true) {
+            // JOptionPane prompts the user for string X
             String xUser = JOptionPane.showInputDialog(
                     null,
-                    "Enter string X (subsequence source),\nor Cancel / type 'quit' to exit:",
+                    "Enter string X,\nor Cancel / type 'quit' to exit:",
                     "Input X",
                     JOptionPane.QUESTION_MESSAGE
             );
 
-            // User closed the dialog or typed quit
+            // JOptionPane breaks on quit message for x
             if (xUser == null || xUser.trim().equalsIgnoreCase("quit")) {
                 break;
             }
-
+            
+            // JOptionPane prompts the user for string Y
             String yUser = JOptionPane.showInputDialog(
                     null,
-                    "Enter string Y (substring source),\nor Cancel / type 'quit' to exit:",
+                    "Enter string Y,\nor Cancel / type 'quit' to exit:",
                     "Input Y",
                     JOptionPane.QUESTION_MESSAGE
             );
 
+             // JOptionPane breaks on quit message for y
             if (yUser == null || yUser.trim().equalsIgnoreCase("quit")) {
                 break;
             }
 
+            // result of space-efficient algorithm for longest common subsequence-substring
             String result = longestSubseqSubstr(xUser, yUser);
+
+            // JOptionPane shows the longest common subsequence-substring result of the user prompt
             JOptionPane.showMessageDialog(
                     null,
                     "Longest subsequence of X and substring of Y:\n" + result,
